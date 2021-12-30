@@ -39,6 +39,39 @@ export class AppComponent implements OnInit{
      
     });
   }
+
+  usuarioObservable(nome: string, email:string) : Observable<Usuario>{
+    return new Observable(Subscriber =>{
+      if(nome === 'Admin'){
+       let usuario = new Usuario(nome, email);
+        setTimeout(()=>{
+          Subscriber.next(usuario);
+        },1000);
+
+        setTimeout(()=>{
+          Subscriber.next(usuario);
+        },2000);
+
+        setTimeout(()=>{
+          Subscriber.next(usuario);
+        },3000);
+
+        setTimeout(()=>{
+          Subscriber.next(usuario);
+        },4000);
+
+        setTimeout(()=>{
+          Subscriber.complete();
+        },5000);
+      }
+      else{
+        Subscriber.error('ops! deu erro.')
+      }
+     
+    });
+  }
+
+
   ngOnInit(): void {
     /* this.minhaPromisse("Eduardo")
     .then(result => console.log(result));
@@ -54,12 +87,32 @@ export class AppComponent implements OnInit{
       erro => console.log(erro))
 */
       const observer = {
-        next: (valor: string) => console.log('Next: ', valor),
-        error: (erro: string) => console.log('Erro: ', erro),
+        next: (valor: any) => console.log('Next: ', valor),
+        error: (erro: any) => console.log('Erro: ', erro),
         complete: () => console.log('Fim')
       }
+      /*
       const obs = this.minhaObservable('Eduardo');
       obs.subscribe(observer)
+      */
+
+      const obs = this.usuarioObservable('Admin','admin@admin.com');
+      const subs = obs.subscribe(observer)
+
+      setTimeout(()=>{
+        subs.unsubscribe();
+        console.log('Conexão fechada: '+ subs.closed )
+      }, 3500);
   }
 
+}
+
+export class Usuario {
+  nome: string;
+  email:string;
+
+  constructor(nome: string, email: string){
+    this.nome = nome;
+    this.email = email;
+  }
 }
