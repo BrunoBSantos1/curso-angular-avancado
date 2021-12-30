@@ -31,6 +31,7 @@ export class AppComponent implements OnInit{
         setTimeout(()=>{
           Subscriber.next('resposta com daley ' + nome);
         },5000);
+        Subscriber.complete();
       }
       else{
         Subscriber.error('ops! deu erro.')
@@ -47,10 +48,18 @@ export class AppComponent implements OnInit{
     .then(result => console.log(result))
     .catch(erro => console.log(erro))
 */
-
+/*
     this.minhaObservable('Eduardo')
       .subscribe(result => console.log(result),
       erro => console.log(erro))
+*/
+      const observer = {
+        next: (valor: string) => console.log('Next: ', valor),
+        error: (erro: string) => console.log('Erro: ', erro),
+        complete: () => console.log('Fim')
+      }
+      const obs = this.minhaObservable('Eduardo');
+      obs.subscribe(observer)
   }
 
 }
