@@ -3,8 +3,8 @@ import { Observable, Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  template: '',
-  styles: []
+  templateUrl: './app-component.html'
+  
 })
 export class AppComponent implements OnInit{
   title = 'RXJS';
